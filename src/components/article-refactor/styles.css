@@ -1,0 +1,40 @@
+/* Пункт списка */
+.ArticleRefactor {
+    padding: 20px 35px;
+}
+.ArticleRefactor-Title {
+    margin: 20px 0;
+}
+.ArticleRefactor-Title_input {}
+.ArticleRefactor-Description {
+    margin: 20px 0;
+}
+.ArticleRefactor-Description_text {
+    resize: vertical;
+    width: 98%;
+    font-size: 16px;
+    padding: 2px;
+}
+
+.ArticleRefactor-Category {
+    margin: 20px 0 ;
+}
+.ArticleRefactor-Edition {
+    margin: 20px 0 ;
+}
+.ArticleRefactor-Edition_input {}
+.ArticleRefactor-Button {
+    margin: 20px 0 ;
+}
+
+
+
+
+
+.ArticleRefactor-Label{
+    margin: 20px 0 ;
+}
+select{
+    font-size: 16px;
+    padding: 3px 2px 2px;
+}
