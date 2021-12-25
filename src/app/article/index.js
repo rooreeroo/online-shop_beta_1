@@ -27,14 +27,14 @@ function Article() {
   const callbacks = {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
   }
-
+  console.log('article', select.article)
   return (
     <Layout head={<h1>{select.article.title}</h1>}>
 
       <Header/>
 
       <Spinner active={select.waiting}>
-        <ArticleCard article={select.article} onAdd={callbacks.addToBasket}/>
+        <ArticleCard article={select.article} onAdd={callbacks.addToBasket} link={`/refactor/${select.article._id}`}/>
       </Spinner>
     </Layout>
   );

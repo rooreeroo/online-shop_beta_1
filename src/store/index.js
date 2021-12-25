@@ -89,6 +89,9 @@ class Store {
   get categories() {
     return this.get('categories')
   }
+  get form() {
+    return this.get('form')
+  }
 }
 
 export default Store;

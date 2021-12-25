@@ -36,7 +36,7 @@ function CatalogFilter() {
 
   const callbacks = {
     onSort: useCallback(sort => store.catalog.setParams({sort}), [store]),
-    onSortCat: useCallback(category => store.catalog.setParams({category}), [store]),
+    onSortCat: useCallback(category => store.catalog.setParams({category, page: 1}), [store]),
     onSearch: useCallback(query => store.catalog.setParams({query, page: 1}), [store]),
     onReset: useCallback(() => store.catalog.resetParams(), [store])
   }

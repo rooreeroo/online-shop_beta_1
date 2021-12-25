@@ -11,7 +11,6 @@ function SelectCategory(props){
 
     const onSelect = useCallback((e) => {
         props.onChange(e.target.value);
-        console.log('value', e.target.value)
     }, [props.onChange])
 
     return (

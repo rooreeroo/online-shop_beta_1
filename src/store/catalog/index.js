@@ -68,9 +68,6 @@ class CatalogStore extends StoreModule {
   }
 
 
-  getCategoryTree(categories) {
-    if (!categories.parentId) {}
-  }
 
   /**
    * Загрузка списка товаров
@@ -86,15 +83,11 @@ class CatalogStore extends StoreModule {
 
     const skip = (newParams.page - 1) * newParams.limit;
     const response = await fetch(`/api/v1/articles?limit=${newParams.limit}&skip=${skip}&fields=items(*),count&sort=${newParams.sort}${newParams.category}&search[query]=${newParams.query}`);
-
     const json = await response.json();
-
-
     this.setState({
       ...this.getState(),
       items: json.result.items,
       count: json.result.count,
-
       waiting: false
     });
 
