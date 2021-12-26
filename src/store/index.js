@@ -86,9 +86,9 @@ class Store {
     return this.get('catalog');
   }
 
-  get categories() {
-    return this.get('categories')
-  }
+  // get categories() {
+  //   return this.get('categories')
+  // }
   get form() {
     return this.get('form')
   }

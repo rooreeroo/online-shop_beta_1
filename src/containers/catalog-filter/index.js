@@ -11,14 +11,14 @@ function CatalogFilter() {
 
   const store = useStore();
 
-  useInit(async () => {
-    await store.get('categories').getCategories()
-  });
+  // useInit(async () => {
+  //   await store.get('categories').getCategories()
+  // });
 
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.categories.categories,
+    categories: state.catalog.categories,
     category: state.catalog.params.category,
   }));
 

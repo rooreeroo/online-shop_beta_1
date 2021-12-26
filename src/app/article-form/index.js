@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback} from "react";
 import Layout from "../../components/layout";
 import useStore from "../../utils/use-store";
 import useSelector from "../../utils/use-selector";
@@ -7,6 +7,7 @@ import Spinner from "../../components/spinner";
 import ArticleRefactor from "../../components/article-refactor";
 import Header from "../../containers/header";
 import useInit from "../../utils/use-init";
+import Input from "../../components/input";
 
 function ArticleForm() {
 
@@ -17,7 +18,7 @@ function ArticleForm() {
     // Начальная загрузка
     useInit(async () => {
         await store.get('form').getCountries();
-        await store.get('categories').getCategories();
+        await store.catalog.getCategories();
         await store.get('form').load(params.id);
         await store.get('article').load(params.id)
     }, [params.id]);
@@ -27,17 +28,16 @@ function ArticleForm() {
         data: state.form.data,
         article: state.article.data,
         waiting: state.form.waiting,
-        categories: state.categories.nonChangedCat,
-        error: state.form.resp
+        categories: state.catalog.nonChangedCat, //не знал какой список лучше передать, поэтому добавил стандартный без дефисов и упорядочивания (categories-упорядоченный с дефисами)
     }));
     const options = {
         countries: select.countries,
         categories: select.categories
-    }
+    };
     const callbacks = {
         onChange: useCallback((name, e) => store.form.setData(name, e), [store]),
         putForm: useCallback((_id) => store.form.putForm(_id), [store]),
-    }
+    };
 
     return (
         <Layout head={<h1>{select.article.title}</h1>}>
@@ -54,7 +54,7 @@ function ArticleForm() {
                     putForm={callbacks.putForm}
                 />}
             </Spinner>
-            {select.error && <div style={{color: 'red'}}>{JSON.stringify(select.error)}</div>}
+            // тут должно быть сообщение об ошибке полученное от сервера
         </Layout>
     );
 }

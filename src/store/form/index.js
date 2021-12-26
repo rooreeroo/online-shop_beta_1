@@ -12,6 +12,7 @@ class FormStore extends StoreModule {
             data: {},
             waiting: true,
             resp: null,
+            waitingError: true
         };
     }
     reloadWindow = () => {
@@ -29,7 +30,6 @@ class FormStore extends StoreModule {
             ...this.getState(),
             data: local
         });
-        console.log('upData', JSON.stringify(this.getState().data))
     }
     async getCountries() {
         const response = await fetch('/api/v1/countries?limit=*&fields=_id,title,code&sort=title.ru');
@@ -79,9 +79,9 @@ class FormStore extends StoreModule {
         } catch (e){
             this.updateState({
                 ...this.getState(),
-                resp: e.json().error,
-                waiting: false
+                resp: e.json().error
             });
+            console.log('resp', this.getState().resp)
         }
     }
 
