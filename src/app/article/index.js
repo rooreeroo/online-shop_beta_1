@@ -27,7 +27,7 @@ function Article() {
   const callbacks = {
     addToBasket: useCallback((_id) => store.basket.add(_id), [store]),
   }
-  console.log('article', select.article)
+
   return (
     <Layout head={<h1>{select.article.title}</h1>}>
 

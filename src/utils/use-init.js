@@ -10,16 +10,19 @@ import shallowequal from "shallowequal";
  */
 export default function useInit(callback, inputs = [], options = {backForward: false}) {
 
-  const last = useRef(null);
-  if (!last.current || !equal(last.current, inputs)){
-    last.current = inputs;
-    callback();
-  }
+  // const last = useRef(null);
+  // if (!last.current || !equal(last.current, inputs)){
+  //   last.current = inputs;
+  //   callback();
+  // }
 
   // Если в истории браузера меняются только query-параметры, то react-router не оповестит
   // компонент об изменениях, поэтому хук можно явно подписать на событие изменения истории
   // браузера (если нужно отреагировать на изменения query-параметров при переходе по истории)
   useEffect(() => {
+
+    callback();
+
     if (options.backForward) {
       window.addEventListener('popstate', callback);
       return () => {

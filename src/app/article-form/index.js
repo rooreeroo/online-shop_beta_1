@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect} from "react";
 import Layout from "../../components/layout";
 import useStore from "../../utils/use-store";
 import useSelector from "../../utils/use-selector";
@@ -16,24 +16,26 @@ function ArticleForm() {
 
     // Начальная загрузка
     useInit(async () => {
-        await store.get('article').load(params.id);
-    }, [params.id]);
-    useInit(async () => {
         await store.get('form').getCountries();
         await store.get('categories').getCategories();
-    }, []);
-
+        await store.get('form').load(params.id);
+        await store.get('article').load(params.id)
+    }, [params.id]);
+    // store.form.getState().resp.subscribe({})
     const select = useSelector(state => ({
         countries: state.form.countries,
+        data: state.form.data,
         article: state.article.data,
         waiting: state.form.waiting,
         categories: state.categories.nonChangedCat,
+        error: state.form.resp
     }));
     const options = {
         countries: select.countries,
         categories: select.categories
     }
     const callbacks = {
+        onChange: useCallback((name, e) => store.form.setData(name, e), [store]),
         putForm: useCallback((_id) => store.form.putForm(_id), [store]),
     }
 
@@ -43,9 +45,16 @@ function ArticleForm() {
             <Header/>
 
             <Spinner active={select.waiting}>
-                <pre>{JSON.stringify(select.article, null, 4)}</pre>
-                <ArticleRefactor options={options}  categories={select.categories} article={select.article} putForm={callbacks.putForm}/>
+                {select.data && <ArticleRefactor
+                    id={params.id}
+                    options={options}
+                    onChange={callbacks.onChange}
+                    categories={select.categories}
+                    article={select.data}
+                    putForm={callbacks.putForm}
+                />}
             </Spinner>
+            {select.error && <div style={{color: 'red'}}>{JSON.stringify(select.error)}</div>}
         </Layout>
     );
 }

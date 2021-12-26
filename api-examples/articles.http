@@ -27,13 +27,13 @@ GET http://example.front.ylab.io/api/v1/articles/61c0a9cb8f67e811d55abb40?fields
 ###
 # Сохранение товара
 
-PUT http://example.front.ylab.io/api/v1/articles/61c0a9cb8f67e811d55abb40
+PUT http://example.front.ylab.io/api/v1/articles/61c76e07ce86791290822b2f
 Content-Type: application/json
 
 {
   "_id": "61c0a9cb8f67e811d55abb40",
   "title": "Товар #11",
-  "description": "Описание товара из множества букв",
+  "description": "Описание товара из множества буквв",
   "price": 3970.52,
   "maidIn": {
     "_id": "61c0a9b58f67e811d55ab056"
@@ -43,3 +43,4 @@ Content-Type: application/json
     "_id": "61c0a9cb8f67e811d55abb32"
   }
 }
+

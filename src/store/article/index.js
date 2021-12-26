@@ -15,11 +15,13 @@ class ArticleStore extends StoreModule {
   /**
    * Загрузка списка товаров
    */
+
+
   async load(id){
 
     this.updateState({
       waiting: true,
-      data: {}
+      data: {},
     });
 
     try {

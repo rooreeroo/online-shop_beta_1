@@ -9,12 +9,7 @@
 .ArticleRefactor-Description {
     margin: 20px 0;
 }
-.ArticleRefactor-Description_text {
-    resize: vertical;
-    width: 98%;
-    font-size: 16px;
-    padding: 2px;
-}
+
 
 .ArticleRefactor-Category {
     margin: 20px 0 ;

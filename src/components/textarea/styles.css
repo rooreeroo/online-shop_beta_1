@@ -1,0 +1,6 @@
+.Textarea {
+    resize: vertical;
+    width: 98%;
+    font-size: 16px;
+    padding: 2px;
+}

@@ -2,48 +2,65 @@ import React, {useCallback} from 'react';
 import propTypes from 'prop-types';
 import {cn} from '@bem-react/classname'
 import './styles.css';
-import numberFormat from "../../utils/number-format";
 import Input from "../input";
+import SelectForm from "../select-form";
+import Textarea from '../textarea'
 
-function ArticleRefactor({article, putForm, options}) {
+function ArticleRefactor({onChange, article, putForm, options}) {
 
+    let handleSubmit = (event) => {
+        putForm(article);
+        event.preventDefault();
+    }
 
-
-    const onSelect = useCallback((e) => {
-    }, [])
 
     // CSS классы по БЭМ
     const className = cn('ArticleRefactor');
 
     return (
-        <form className={className()}>
+        <form className={className()} onSubmit={(event) => handleSubmit(event)}>
             <div className={className('Title')}>Название:</div>
-            <Input className={className('Title_input')} name='title' value={article.title} required/>
-
+            <Input
+                onChange={(e) => onChange('title', e)}
+                className={className('Title_input')}
+                value={article.title}
+            />
             <div className={className('Description')}>Описание:</div>
-            <textarea className={className('Description_text')} name='description' value={article.description} required />
-
+            <Textarea
+                onChange={(e) => onChange('description', e)}
+                className={className('Description_text')}
+                value={article.description}
+            />
             <div className={className('Label')}>Страна производитель:</div>
-            <select onChange={onSelect} defaultValue={article.maidIn?.title} name='maidIn?._id'>
-                {options.countries && options.countries.map(country => (
-                    <option key={country._id} value={country._id} selected={country.title === article.maidIn?.title} >{country.title}</option>
-                ))}
-            </select>
-
+            <SelectForm
+                onChange={(e) => onChange('maidIn', e)}
+                options={options.countries}
+                value={article.maidIn?._id}
+            />
             <div className={className('Category')}>Категория:</div>
-            <select onChange={onSelect} defaultValue={article.category?.title} name='category?._id'>
-                {options.categories && options.categories.map(category => (
-                    <option key={category._id} value={category._id} selected={category.title === article.category?.title} >{category.title}</option>
-                ))}
-            </select>
-
+            <SelectForm
+                onChange={(e) => onChange('category', e)}
+                value={article.category?._id}
+                options={options.categories}
+            />
             <div className={className('Edition')}>Год выпуска:</div>
-            <Input className={className('Edition_input')} name='edition' value={article.edition} required/>
-
+            <Input
+                onChange={(e) => onChange('edition', e)}
+                className={className('Edition_input')}
+                value={article.edition}
+            />
             <div className={className('Label')}>Цена:</div>
-            <Input className={className('Value')} name='price' value={`${numberFormat(article.price)}`} required/>
-
-            <div className={className('Button')}><input type="submit" value={"отправить"} className={'active'} onClick={() => putForm(article._id)}/></div>
+            <Input
+                onChange={(e) => onChange('price', e)}
+                className={className('Value')}
+                value={article.price}
+            />
+            <div className={className('Button')}>
+                <input
+                    type="submit"
+                    value={"Сохранить"}
+                />
+            </div>
         </form>
     )
 }
