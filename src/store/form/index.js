@@ -10,8 +10,7 @@ class FormStore extends StoreModule {
         return {
             data: {},
             waiting: true,
-            resp: null,
-            waitingError: true
+            resp: null
         };
     }
     reloadWindow = () => {
@@ -26,7 +25,8 @@ class FormStore extends StoreModule {
             : local[prop] = e;
         this.setState({
             ...this.getState(),
-            data: local
+            data: local,
+            resp: null,
         });
     }
     async putForm(data) {
