@@ -14,8 +14,9 @@ function Select(props){
 
   return (
     <select className={className()} onChange={onSelect} value={props.value}>
+      {props.all === undefined ? null : props.all}
       {props.options.map(item => (
-        <option key={item.value} value={item.value}>{item.title}</option>
+        <option key={item.value || item._id} value={item.value || item._id}>{item.title}</option>
       ))}
     </select>
   )

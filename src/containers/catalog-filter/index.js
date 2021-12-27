@@ -1,24 +1,18 @@
-import React, {useCallback, useMemo} from "react";
+import React, {useCallback, useMemo, useEffect} from "react";
 import useSelector from "../../utils/use-selector";
 import useStore from "../../utils/use-store";
 import Select from "../../components/select";
 import LayoutTools from "../../components/layout-tools";
 import Input from "../../components/input";
-import SelectCategory from "../../components/category";
-import useInit from "../../utils/use-init";
 
 function CatalogFilter() {
 
   const store = useStore();
 
-  // useInit(async () => {
-  //   await store.get('categories').getCategories()
-  // });
-
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
-    categories: state.catalog.categories,
+    categories: state.categories.categories,
     category: state.catalog.params.category,
   }));
 
@@ -30,7 +24,6 @@ function CatalogFilter() {
       {value:'-price', title: 'Сначала дорогие'},
       {value:'edition', title: 'Древние'},
     ]), []),
-    categories: select.categories
   }
 
 
@@ -40,11 +33,15 @@ function CatalogFilter() {
     onSearch: useCallback(query => store.catalog.setParams({query, page: 1}), [store]),
     onReset: useCallback(() => store.catalog.resetParams(), [store])
   }
-
   return (
     <LayoutTools>
-      <SelectCategory onChange={callbacks.onSortCat} value={select.category} options={options.categories}/>
-      {/* тут выбор категории*/}
+      {select.categories && <Select
+          onChange={callbacks.onSortCat}
+          value={select.category}
+          options={select.categories}
+          all={<option key={Symbol} value={''}>Все</option>}
+      />}
+
       <Input onChange={callbacks.onSearch} value={select.query} placeholder={'Поиск'} theme="big"/>
       <label>Сортировка:</label>
       <Select onChange={callbacks.onSort} value={select.sort} options={options.sort}/>

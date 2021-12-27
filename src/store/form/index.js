@@ -8,7 +8,6 @@ class FormStore extends StoreModule {
      */
     initState() {
         return {
-            countries: [],
             data: {},
             waiting: true,
             resp: null,
@@ -29,15 +28,6 @@ class FormStore extends StoreModule {
             ...this.getState(),
             data: local
         });
-    }
-    async getCountries() {
-        const response = await fetch('/api/v1/countries?limit=*&fields=_id,title,code&sort=title.ru');
-        const json = await response.json();
-        this.setState({
-            ...this.getState(),
-            countries: json.result.items,
-            waiting: false
-        })
     }
     async putForm(data) {
         try {

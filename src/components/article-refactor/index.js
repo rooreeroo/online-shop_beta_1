@@ -3,11 +3,10 @@ import propTypes from 'prop-types';
 import {cn} from '@bem-react/classname'
 import './styles.css';
 import Input from "../input";
-import SelectForm from "../select-form";
+import Select from "../select";
 import Textarea from '../textarea'
 
-function ArticleRefactor({onChange, article, putForm, options}) {
-
+function ArticleRefactor({onChange, article, putForm, countries, categories}) {
     let handleSubmit = (event) => {
         putForm(article);
         event.preventDefault();
@@ -32,16 +31,16 @@ function ArticleRefactor({onChange, article, putForm, options}) {
                 value={article.description}
             />
             <div className={className('Label')}>Страна производитель:</div>
-            <SelectForm
+            <Select
                 onChange={(e) => onChange('maidIn', e)}
-                options={options.countries}
+                options={countries}
                 value={article.maidIn?._id}
             />
             <div className={className('Category')}>Категория:</div>
-            <SelectForm
+            <Select
                 onChange={(e) => onChange('category', e)}
                 value={article.category?._id}
-                options={options.categories}
+                options={categories}
             />
             <div className={className('Edition')}>Год выпуска:</div>
             <Input

@@ -7,6 +7,7 @@ import Spinner from "../../components/spinner";
 import ArticleRefactor from "../../components/article-refactor";
 import Header from "../../containers/header";
 import useInit from "../../utils/use-init";
+import ErrorForm from "../../components/error-form";
 
 function ArticleForm() {
 
@@ -16,23 +17,24 @@ function ArticleForm() {
 
     // Начальная загрузка
     useInit(async () => {
-        await store.get('form').getCountries();
-        await store.catalog.getCategories();
-        await store.get('form').load(params.id);
-        await store.get('article').load(params.id)
+        const
+            categories = store.get('categories').getCategories(),
+            countries = store.get('countries').getCountries(),
+            form = store.get('form').load(params.id),
+            article = store.get('article').load(params.id);
+
+        const arr =[countries, categories, form, article]
+        await Promise.all(arr)
     }, [params.id]);
+
     const select = useSelector(state => ({
-        countries: state.form.countries,
+        countries: state.countries.countries,
         data: state.form.data,
         article: state.article.data,
         waiting: state.form.waiting,
         resp: state.form.resp,
-        categories: state.catalog.categories,
+        categories: state.categories.categories,
     }));
-    const options = {
-        countries: select.countries,
-        categories: select.categories
-    };
     const callbacks = {
         onChange: useCallback((name, e) => store.form.setData(name, e), [store]),
         putForm: useCallback((_id) => store.form.putForm(_id), [store]),
@@ -44,9 +46,9 @@ function ArticleForm() {
             <Header/>
 
             <Spinner active={select.waiting}>
-                {select.data && <ArticleRefactor
+                {select.data && select.countries && select.categories && <ArticleRefactor
                     id={params.id}
-                    options={options}
+                    countries={select.countries}
                     onChange={callbacks.onChange}
                     categories={select.categories}
                     article={select.data}
@@ -54,20 +56,7 @@ function ArticleForm() {
                 />}
             </Spinner>
             {/*тут должно быть сообщение об ошибке полученное от сервера*/}
-            {select.resp && <div style={{color: 'red', paddingLeft: '40px'}}>
-                <h1>Error</h1>
-                <div>
-                    <p>КОД:{select.resp.id}</p>
-                    <p>Тип:{select.resp.message === 'Incorrect data'? ' ' + 'Некорректный ввод' : select.resp.message}</p>
-                    {/*<p>Правило:{JSON.stringify(select.resp.data.issues)}</p>*/}
-                    {select.resp.data.issues && select.resp.data.issues.map((item, index) => (
-                        <div key={index}><p>{
-                            item.path === "title.'ru'" ? 'Название' :
-                                item.path === "price" ? 'Цена' :
-                                    item.path === "edition" ? 'Год выпуска' : item.path}{':'+' '+item.message}</p></div>
-                    ))}
-                </div>
-            </div>}
+            {select.resp && <ErrorForm resp={select.resp}/>}
 
         </Layout>
     );

@@ -5,6 +5,7 @@ import Header from "../../containers/header";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import useInit from "../../utils/use-init";
+import useSelector from "../../utils/use-selector";
 
 function Main() {
 
@@ -12,14 +13,20 @@ function Main() {
 
   // Загрузка тестовых данных при первом рендере
   useInit(async () => {
-    await store.catalog.initParams();
-      await store.catalog.getCategories();
+      const
+          categories = store.get('categories').getCategories(),
+          params = store.catalog.initParams();
+      const arr2 =[params, categories]
+      await Promise.all(arr2)
   }, [], {backForward: true});
+    const select = useSelector(state => ({
+        categories: state.categories.categories,
+    }));
 
   return (
     <Layout head={<h1>Магазин</h1>}>
       <Header/>
-      <CatalogFilter/>
+        {select.categories && <CatalogFilter/>}
       <CatalogList/>
     </Layout>
   );
