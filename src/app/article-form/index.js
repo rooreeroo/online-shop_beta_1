@@ -7,7 +7,6 @@ import Spinner from "../../components/spinner";
 import ArticleRefactor from "../../components/article-refactor";
 import Header from "../../containers/header";
 import useInit from "../../utils/use-init";
-import Input from "../../components/input";
 
 function ArticleForm() {
 
@@ -61,8 +60,8 @@ function ArticleForm() {
                     <p>КОД:{select.resp.id}</p>
                     <p>Тип:{select.resp.message === 'Incorrect data'? ' ' + 'Некорректный ввод' : select.resp.message}</p>
                     {/*<p>Правило:{JSON.stringify(select.resp.data.issues)}</p>*/}
-                    {select.resp.data.issues && select.resp.data.issues.map((item) => (
-                        <div><p>{
+                    {select.resp.data.issues && select.resp.data.issues.map((item, index) => (
+                        <div key={index}><p>{
                             item.path === "title.'ru'" ? 'Название' :
                                 item.path === "price" ? 'Цена' :
                                     item.path === "edition" ? 'Год выпуска' : item.path}{':'+' '+item.message}</p></div>
