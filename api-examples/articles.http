@@ -31,8 +31,8 @@ PUT http://example.front.ylab.io/api/v1/articles/61c76e07ce86791290822b2f
 Content-Type: application/json
 
 {
-  "_id": "61c0a9cb8f67e811d55abb40",
-  "title": "Товар #11",
+  "_id": "61c76e07ce86791290822b2f",
+  "title": "",
   "description": "Описание товара из множества буквв",
   "price": 3970.52,
   "maidIn": {
@@ -43,4 +43,6 @@ Content-Type: application/json
     "_id": "61c0a9cb8f67e811d55abb32"
   }
 }
+
+###
 
