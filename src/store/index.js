@@ -86,7 +86,7 @@ class Store {
     return this.get('catalog');
   }
 
-  // get categories() {
+  // get categories() { //если отдельный модуль хранилища все-таки нужен
   //   return this.get('categories')
   // }
   get form() {

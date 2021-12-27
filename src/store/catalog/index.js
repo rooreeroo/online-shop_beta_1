@@ -30,7 +30,6 @@ class CatalogStore extends StoreModule {
         category: ''
       },
       categories: [],
-      nonChangedCat:[],
       waiting: true
     };
   }
@@ -133,7 +132,6 @@ class CatalogStore extends StoreModule {
     this.setState({
       ...this.getState(),
       categories: this.getFullTree(json.result.items), // две функции на выбор convert || getFullTree обе работают, но различными способами
-      nonChangedCat: json.result.items
     });
   }
 

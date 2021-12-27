@@ -19,7 +19,6 @@ class FormStore extends StoreModule {
         window.location.reload();
     };
     setData(prop, e) {
-        console.log('prop e', prop, e);
         let local = {...this.getState().data};
         prop === 'category'
             ? local[prop]._id = e
@@ -50,13 +49,14 @@ class FormStore extends StoreModule {
                 body: JSON.stringify(data)
             });
             const json = await response.json();
-            if (json.error) throw new Error(json.error);
+            if (json.error) throw json.error;
             this.reloadWindow()
-        } catch (e) {
+        } catch (error) {
             this.setState({
                 ...this.getState(),
-                resp: e.error
+                resp: error
             })
+            console.log('Error', error, JSON.stringify(error))
         }
 
     }

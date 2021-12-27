@@ -22,13 +22,13 @@ function ArticleForm() {
         await store.get('form').load(params.id);
         await store.get('article').load(params.id)
     }, [params.id]);
-    // store.form.getState().resp.subscribe({})
     const select = useSelector(state => ({
         countries: state.form.countries,
         data: state.form.data,
         article: state.article.data,
         waiting: state.form.waiting,
-        categories: state.catalog.nonChangedCat, //не знал какой список лучше передать, поэтому добавил стандартный без дефисов и упорядочивания (categories-упорядоченный с дефисами)
+        resp: state.form.resp,
+        categories: state.catalog.categories,
     }));
     const options = {
         countries: select.countries,
@@ -54,7 +54,22 @@ function ArticleForm() {
                     putForm={callbacks.putForm}
                 />}
             </Spinner>
-            // тут должно быть сообщение об ошибке полученное от сервера
+            {/*тут должно быть сообщение об ошибке полученное от сервера*/}
+            {select.resp && <div style={{color: 'red', paddingLeft: '40px'}}>
+                <h1>Error</h1>
+                <div>
+                    <p>КОД:{select.resp.id}</p>
+                    <p>Тип:{select.resp.message === 'Incorrect data'? ' ' + 'Некорректный ввод' : select.resp.message}</p>
+                    {/*<p>Правило:{JSON.stringify(select.resp.data.issues)}</p>*/}
+                    {select.resp.data.issues && select.resp.data.issues.map((item) => (
+                        <div><p>{
+                            item.path === "title.'ru'" ? 'Название' :
+                                item.path === "price" ? 'Цена' :
+                                    item.path === "edition" ? 'Год выпуска' : item.path}{':'+' '+item.message}</p></div>
+                    ))}
+                </div>
+            </div>}
+
         </Layout>
     );
 }
