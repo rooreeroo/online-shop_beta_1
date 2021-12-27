@@ -10,7 +10,7 @@ function Select(props){
 
   const onSelect = useCallback((e) => {
     props.onChange(e.target.value);
-  }, [props.onChange])
+  }, [props.onChange]);
 
   return (
     <select className={className()} onChange={onSelect} value={props.value}>
@@ -25,11 +25,11 @@ Select.propTypes = {
   options: propTypes.arrayOf(propTypes.object).isRequired,
   value: propTypes.any,
   onChange: propTypes.func
-}
+};
 
 Select.defaultProps = {
   onChange: () => {
   }
-}
+};
 
 export default React.memo(Select);
