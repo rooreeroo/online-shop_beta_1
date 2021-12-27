@@ -11,7 +11,7 @@ const QS_OPTIONS = {
     ignoreQueryPrefix: true,
     comma: true
   }
-}
+};
 
 class CatalogStore extends StoreModule {
 
@@ -42,7 +42,7 @@ class CatalogStore extends StoreModule {
    */
   async initParams(params = {}){
     // Параметры из URl. Их нужно валидирвать, приводить типы и брать толкьо нужные
-    const urlParams = qs.parse(window.location.search, QS_OPTIONS.parse) || {}
+    const urlParams = qs.parse(window.location.search, QS_OPTIONS.parse) || {};
     let validParams = {};
     if (urlParams.page) validParams.page = Number(urlParams.page) || 1;
     if (urlParams.limit) validParams.limit = Number(urlParams.limit) || 10;
@@ -118,9 +118,9 @@ class CatalogStore extends StoreModule {
         const childArr = getTree(children, elem._id, inner + 1);
         return arr.concat(childArr);
       }, []);
-    }
+    };
     return getTree(rootArray);
-  }
+  };
 
 
 
