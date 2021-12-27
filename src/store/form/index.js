@@ -55,7 +55,7 @@ class FormStore extends StoreModule {
             this.setState({
                 ...this.getState(),
                 resp: error
-            })
+            });
             console.log('Error', error, JSON.stringify(error))
         }
 
