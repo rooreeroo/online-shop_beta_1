@@ -13,9 +13,7 @@ class FormStore extends StoreModule {
             resp: null
         };
     }
-    reloadWindow = () => {
-        window.location.reload();
-    };
+
     setData(prop, e) {
         let local = {...this.getState().data};
         prop === 'category'
@@ -40,7 +38,10 @@ class FormStore extends StoreModule {
             });
             const json = await response.json();
             if (json.error) throw json.error;
-            this.reloadWindow()
+            this.store.get('article').setState({ //надеюсь так можно было сделать
+                ...this.getState(),
+                data: json.result
+            })
         } catch (error) {
             this.setState({
                 ...this.getState(),
