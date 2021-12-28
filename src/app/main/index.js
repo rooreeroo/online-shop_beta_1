@@ -13,11 +13,7 @@ function Main() {
 
   // Загрузка тестовых данных при первом рендере
   useInit(async () => {
-      const
-          categories = store.get('categories').getCategories(),
-          params = store.catalog.initParams();
-      const arr2 =[params, categories]
-      await Promise.all(arr2)
+      await Promise.all([store.catalog.initParams(), store.get('categories').getCategories()])
   }, [], {backForward: true});
     const select = useSelector(state => ({
         categories: state.categories.categories,
